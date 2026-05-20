@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIアバター作成ロードマップ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    body {
+      background: #0b1020;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      padding: 16px 30px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 18px;
+      background: #1d2740;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg,#00d4ff,#8b5cf6);
+      transition: 0.4s;
+    }
+
+    .page {
+      width: 1920px;
+      min-height: 1080px;
+      margin: 100px auto 40px auto;
+      padding: 70px;
+      background: linear-gradient(145deg,#111827,#0f172a);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    h1 {
+      font-size: 68px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 46px;
+      margin-bottom: 30px;
+    }
+
+    h3 {
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    p {
+      line-height: 1.8;
+      color: #d7d7d7;
+      font-size: 20px;
+    }
+
+    .subtitle {
+      color: #00d4ff;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .date {
+      margin-top: 30px;
+      color: #94a3b8;
+      font-size: 22px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .step-box {
+      background: rgba(255,255,255,0.04);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-left: 6px solid #00d4ff;
+    }
+
+    ul {
+      padding-left: 24px;
+      margin-top: 12px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      line-height: 1.7;
+      font-size: 19px;
+      color: #d5d5d5;
+    }
+
+    .button-area {
+      margin-top: 24px;
+    }
+
+    button {
+      background: linear-gradient(90deg,#00d4ff,#8b5cf6);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    th, td {
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 18px;
+      vertical-align: top;
+      font-size: 18px;
+    }
+
+    th {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .link-box {
+      margin-top: 16px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .link-box a {
+      color: #00d4ff;
+      text-decoration: none;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .tag {
+      display: inline-block;
+      background: rgba(0,212,255,0.14);
+      color: #00d4ff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    .footer-note {
+      position: absolute;
+      bottom: 40px;
+      right: 60px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar">
+  <div class="progress-top">
+    <div>
+      <strong>AIアバター作成ロードマップ</strong>
+    </div>
+    <div>
+      完了数: <span id="doneCount">0</span> / 10
+    </div>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<section class="page">
+  <div class="subtitle">VRchat × AI</div>
+  <h1>AIで稼ぐぞ！</h1>
+  <p style="margin-top:40px;font-size:28px;max-width:1200px;">
+    AIを使いながらVRChat向けアバターを作成し、Boothなどで販売するまでをまとめた実践型ロードマップ。
+    初心者でも順番に進められるように、使用ツール、目的、リンク、使い方をまとめている。
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3><i class="ri-team-fill"></i> メンバー</h3>
+      <p>中田アドリアン /Crispy</p>
+    </div>
+
+    <div class="card">
+      <h3><i class="ri-rocket-2-fill"></i> 最終目標</h3>
+      <p>
+        AIを利用して大量にデザインを生成し、その中から売れそうなものを選び、VRChat向け商品として販売する。
+      </p>
+    </div>
+  </div>
+
+  <div class="date">作成日: 2026年5月20日</div>
+  <div class="footer-note">Page 1</div>
+</section>
+
+<section class="page">
+  <h2>STEP 1 : 制作環境を準備する</h2>
+
+  <div class="step-box">
+    <h3>Unityをインストール</h3>
+    <p>
+      VRChatアバターを最終的にアップロードするために必要。Unity Hubから指定バージョンを導入する。
+    </p>
+
+    <div class="link-box">
+      <a href="https://unity.com/ja" target="_blank">Unity公式サイト</a>
+      <p>
+        目的: VRChat対応環境構築。<br>
+        使い方: Unity Hubをダウンロード → Unity 2022系をインストール。
+      </p>
+    </div>
+
+    <div class="button-area">
+      <button onclick="markDone(this)">できた</button>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <h3>VRChat Creator Companion導入</h3>
+
+    <div class="link-box">
+      <a href="https://vrchat.com/home/download" target="_blank">VRChat公式サイト</a>
+      <p>
+        目的: VRChat SDK導入。<br>
+        使い方: Creator Companionを導入して新規プロジェクトを作成。
+      </p>
+    </div>
+
+    <div class="button-area">
+      <button onclick="markDone(this)">できた</button>
+    </div>
+  </div>
+
+  <div class="footer-note">Page 2</div>
+</section>
+
+<section class="page">
+  <h2>STEP 2 : VRoid Studioでアバターを作る</h2>
+
+  <div class="step-box">
+    <h3>VRoid Studio導入</h3>
+
+    <div class="link-box">
+      <a href="https://vroid.com/studio" target="_blank">VRoid Studio</a>
+      <p>
+        目的: キャラクター作成。<br>
+        使い方: 新規キャラクター作成 → 顔、髪、服を調整 → VRM出力。
+      </p>
+    </div>
+
+    <ul>
+      <li>最初は女性アバター1体を完成させる</li>
+      <li>髪色変更で別商品を作れるようにする</li>
+      <li>世界観を決めてシリーズ化する</li>
+    </ul>
+
+    <div class="button-area">
+      <button onclick="markDone(this)">できた</button>
+    </div>
+  </div>
+
+  <div class="footer-note">Page 3</div>
+</section>
+
+<section class="page">
+  <h2>STEP 3 : AIでデザイン案を生成する</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>SeaArt AI</h3>
+      <div class="link-box">
+        <a href="https://www.seaart.ai/" target="_blank">SeaArt AI</a>
+        <p>
+          目的: キャラクターデザイン生成。<br>
+          使い方: 「cyber girl」「gothic fashion」など入力して参考画像を生成。
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Civitai</h3>
+      <div class="link-box">
+        <a href="https://civitai.com/" target="_blank">Civitai</a>
+        <p>
+          目的: AIモデル検索。<br>
+          使い方: 画像生成モデルやLoRAを確認し、世界観を探す。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <tr>
+      <th>生成テーマ</th>
+      <th>入力例</th>
+      <th>目的</th>
+    </tr>
+    <tr>
+      <td>サイバー</td>
+      <td>cyber girl, neon blue, hoodie</td>
+      <td>未来感ある世界観制作</td>
+    </tr>
+    <tr>
+      <td>ゴシック</td>
+      <td>gothic fashion, dark angel</td>
+      <td>暗め人気デザイン生成</td>
+    </tr>
+    <tr>
+      <td>ストリート</td>
+      <td>street fashion anime</td>
+      <td>カジュアル系販売用</td>
+    </tr>
+  </table>
+
+  <div class="button-area">
+    <button onclick="markDone(this)">できた</button>
+  </div>
+
+  <div class="footer-note">Page 4</div>
+</section>
+
+<section class="page">
+  <h2>STEP 4 : Blenderで最低限の修正</h2>
+
+  <div class="link-box">
+    <a href="https://www.blender.org/" target="_blank">Blender</a>
+    <p>
+      目的: VRM修正、アクセ追加、不要部分削除。<br>
+      使い方: VRM読み込み → サイズ変更 → Export。
+    </p>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>最初に覚える操作</h3>
+      <ul>
+        <li>移動</li>
+        <li>回転</li>
+        <li>拡大縮小</li>
+        <li>FBX Export</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>最初はやらない</h3>
+      <ul>
+        <li>フルモデリング</li>
+        <li>スカルプト</li>
+        <li>完全自作骨格</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="button-area">
+    <button onclick="markDone(this)">できた</button>
+  </div>
+
+  <div class="footer-note">Page 5</div>
+</section>
+
+<section class="page">
+  <h2>STEP 5 : Unityへ導入</h2>
+
+  <div class="step-box">
+    <h3>VRM導入</h3>
+    <ul>
+      <li>VRMファイル読み込み</li>
+      <li>PhysBone設定</li>
+      <li>表情確認</li>
+      <li>シェーダー設定</li>
+    </ul>
+  </div>
+
+  <div class="link-box">
+    <a href="https://lilxyzw.github.io/lilToon/" target="_blank">lilToon</a>
+    <p>
+      目的: アバター見た目調整。<br>
+      使い方: Unityへ導入してマテリアルへ適用。
+    </p>
+  </div>
+
+  <div class="button-area">
+    <button onclick="markDone(this)">できた</button>
+  </div>
+
+  <div class="footer-note">Page 6</div>
+</section>
+
+<section class="page">
+  <h2>STEP 6 : 商品画像を作る</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>必要画像</h3>
+      <ul>
+        <li>正面</li>
+        <li>横</li>
+        <li>後ろ</li>
+        <li>顔アップ</li>
+        <li>全身</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>AI背景生成</h3>
+      <ul>
+        <li>neon room</li>
+        <li>cyber city</li>
+        <li>dark room</li>
+        <li>dream world</li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="margin-top:30px;">
+    商品画像はクリック率に直結する。背景、色、光を統一してシリーズ感を出す。
+  </p>
+
+  <div class="button-area">
+    <button onclick="markDone(this)">できた</button>
+  </div>
+
+  <div class="footer-note">Page 7</div>
+</section>
+
+<section class="page">
+  <h2>STEP 7 : Booth販売</h2>
+
+  <div class="link-box">
+    <a href="https://booth.pm/ja" target="_blank">Booth</a>
+    <p>
+      目的: VRChatアバター販売。<br>
+      使い方: 商品登録 → サムネ設定 → VRM/UnityPackage添付。
+    </p>
+  </div>
+
+  <table>
+    <tr>
+      <th>価格帯</th>
+      <th>目的</th>
+      <th>戦略</th>
+    </tr>
+    <tr>
+      <td>0円</td>
+      <td>認知獲得</td>
+      <td>無料配布</td>
+    </tr>
+    <tr>
+      <td>500円</td>
+      <td>レビュー獲得</td>
+      <td>初心者向け</td>
+    </tr>
+    <tr>
+      <td>1000〜3000円</td>
+      <td>利益化</td>
+      <td>人気シリーズ展開</td>
+    </tr>
+  </table>
+
+  <div class="button-area">
+    <button onclick="markDone(this)">できた</button>
+  </div>
+
+  <div class="footer-note">Page 8</div>
+</section>
+
+<section class="page">
+  <h2>STEP 8 : SNS運用</h2>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>X投稿内容</h3>
+      <ul>
+        <li>制作途中</li>
+        <li>色違い比較</li>
+        <li>髪型比較</li>
+        <li>無料配布告知</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>目的</h3>
+      <ul>
+        <li>認知拡大</li>
+        <li>Booth流入</li>
+        <li>シリーズ化</li>
+        <li>ファン獲得</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="link-box">
+    <a href="https://buffer.com/" target="_blank">Buffer</a>
+    <p>
+      目的: SNS予約投稿。<br>
+      使い方: 投稿時間設定 → 自動投稿。
+    </p>
+  </div>
+
+  <div class="button-area">
+    <button onclick="markDone(this)">できた</button>
+  </div>
+
+  <div class="footer-note">Page 9</div>
+</section>
+
+<section class="page">
+  <h2>STEP 9 : AI副業との対応関係</h2>
+
+  <table>
+    <tr>
+      <th>元の作業</th>
+      <th>実際にやっていた内容</th>
+      <th>AI副業で対応する内容</th>
+      <th>共通点</th>
+    </tr>
+    <tr>
+      <td>研究データ整理</td>
+      <td>情報を分類してまとめる</td>
+      <td>アバターデザイン整理</td>
+      <td>カテゴリごとに分類して管理する流れが同じ</td>
+    </tr>
+    <tr>
+      <td>グラフ作成</td>
+      <td>見やすく情報を整理</td>
+      <td>販売画像制作</td>
+      <td>見た目で伝える構造が同じ</td>
+    </tr>
+    <tr>
+      <td>発表資料作成</td>
+      <td>内容を順番に構築</td>
+      <td>商品ページ制作</td>
+      <td>見せ方設計が共通</td>
+    </tr>
+    <tr>
+      <td>コード修正</td>
+      <td>問題箇所を探して直す</td>
+      <td>Unityエラー修正</td>
+      <td>原因特定→修正の流れが一致</td>
+    </tr>
+    <tr>
+      <td>衛星画像解析</td>
+      <td>画像から特徴確認</td>
+      <td>AIデザイン選別</td>
+      <td>大量画像から特徴を見つける流れが同じ</td>
+    </tr>
+  </table>
+
+  <div class="step-box" style="margin-top:40px;">
+    <h3>収益シミュレーション</h3>
+    <p>
+      1000円アバター × 週3販売 × 4週 = 月12000円（販売数により変動）<br>
+      3000円アバター × 週2販売 × 4週 = 月24000円（販売数により変動）
+    </p>
+  </div>
+
+  <div class="button-area">
+    <button onclick="markDone(this)">完成！</button>
+  </div>
+
+  <div class="footer-note">Page 10</div>
+</section>
+
+<script>
+let progress = 0;
+const maxProgress = 10;
+
+function markDone(button){
+  if(button.dataset.done === 'true') return;
+
+  button.dataset.done = 'true';
+  button.innerText = '完了済み';
+  button.style.opacity = '0.6';
+
+  progress++;
+
+  document.getElementById('doneCount').innerText = progress;
+  document.getElementById('progressFill').style.width = ((progress/maxProgress)*100) + '%';
+}
+</script>
+
+</body>
+</html>
